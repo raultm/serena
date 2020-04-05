@@ -1,0 +1,26 @@
+{
+  "name": "starshippooperbot",
+  "version": "0.2.0",
+  "description": "Starship Popper Telegram Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch --notify",
+    "jest": "jest",
+    "jc": "jest --collectCoverage",
+    "push-comment-export": "find library/ -type f -exec sed  -i '' 's/^module.exports/\\/\\/module.exports/g' {} \\;;",
+    "push-comment-require": "find library/ -type f -exec sed  -i '' 's/^\\(.*= require.*$\\)/\\/\\/\\1/' {} \\;;",
+    "push-comment": "npm run push-comment-export & npm run push-comment-require",
+    "push-uncomment-export": "find library/ -type f -exec sed  -i '' 's/^\\/\\/module.exports/module.exports/g' {} \\;",
+    "push-uncomment-require": "find library/ -type f -exec sed  -i '' 's/^\\/\\/\\(.*= require.*$\\)/\\1/' {} \\;;",
+    "push-uncomment": "npm run push-uncomment-export & npm run push-uncomment-require",
+    "push": "npm run push-comment; clasp push ; npm run push-uncomment "
+  },
+  "author": "Raul Tierno",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^25.1.0"
+  },
+  "dependencies": {
+    "sinon": "^9.0.0"
+  }
+}

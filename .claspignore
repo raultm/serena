@@ -1,0 +1,10 @@
+# except the extensions...
+!appsscript.json
+!**/*.js
+
+# ignore even valid files if in...
+.git/**
+node_modules/**
+test/**
+jest.config.js
+coverage/**
