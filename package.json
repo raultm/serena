@@ -1,7 +1,7 @@
 {
-  "name": "starshippooperbot",
-  "version": "0.2.0",
-  "description": "Starship Popper Telegram Bot",
+  "name": "serena",
+  "version": "0.1.0",
+  "description": "Serena",
   "main": "index.js",
   "scripts": {
     "test": "jest --watch --notify",
@@ -18,9 +18,8 @@
   "author": "Raul Tierno",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^25.1.0"
-  },
-  "dependencies": {
+    "jest": "^25.1.0",
     "sinon": "^9.0.0"
-  }
+  },
+  "dependencies": {}
 }
