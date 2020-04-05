@@ -1,6 +1,9 @@
 # MACOS
 .DS_Store
 
+# CLASP
+.clasp.json
+
 # Secrets
 Settings.js
 index.js 

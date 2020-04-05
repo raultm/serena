@@ -35,11 +35,11 @@ describe('Pipeline - ', () => {
         expect(response).toBe(6);
     });
 
-    xtest('with two middleware that work after response', () => 
+    test('with two middleware that work after response', () => 
     {
         var response = Pipeline.handle({
             data: {id:4},
-            action: (data) => console.log(data),
+            action: (data) => data.id,
             middlewares: [
                 (req, nextAction) => nextAction.next(req) + 2,
                 (req, nextAction) => nextAction.next(req) + 3,
