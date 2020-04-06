@@ -8,17 +8,17 @@ var Router = class Router {
         this.instance = null
     }
 
-    static get(path, handler) {
+    static get(path, handler, ...middlewares) {
         Router.getInstance().addRoute({
             method: 'get',
             path: path,
             handler: handler,
+            middlewares: middlewares
         })
     }
 
     static handle(request) {
         var route = Router.getInstance().routes
-            //.sort(Router.routeDepthComparison)
             .filter((route) => request.method==route.method && route.regex.test(request.path))
             .shift()
         var response = { status: 200, body:""}
@@ -26,18 +26,26 @@ var Router = class Router {
             response.status = 400
             response.body = "Route not found"
         } else {
-            //console.log(route)
-            var match = request.path.match(route.regex)
-            route.params = Router.regExpResultToParams(match, route.parameterNames);
-            response.body = route.handler(route.params, request, response)
+            try {
+                var match = request.path.match(route.regex)
+                route.params = Router.regExpResultToParams(match, route.parameterNames);
+                response = Router.pipeline(route.params, request, response, route.handler, route.middlewares)
+            } catch (error) {
+                response.status = 500
+                response.body = error.toString()
+            }
         }
         return response
     }
 
-    static routeDepthComparison(a,b) {
-        var slashCount = b.path.split("/").length - a.path.split("/").length
-        if(slashCount != 0) return slashCount
-        return b.path.length - a.path.length
+    static pipeline(data, request, response, handler, middlewares = []){
+        //if(middlewares.length == 0) return handler(data, request, response)
+
+        var pipeline = middlewares.reduce( 
+            (lastAction, middleware) => PipelineAction.middleware(middleware, lastAction), 
+            PipelineAction.action(handler, data, response)
+        )
+        return pipeline.exec(request)
     }
 
     static regExpResultToParams(match, names) {
@@ -71,10 +79,45 @@ var Router = class Router {
         ;
         this.routes.push(route)
     }
+}
 
+class PipelineAction {
     
+    static middleware(runnable, innerAction) {
+        return new PipelineAction(runnable, innerAction)
+    }
 
+    static action(runnable, data, response) {
+        return new PipelineAction(runnable, null, data, response)
+    }
+    
+    constructor(runnable, nextAction, data = null, response = null) {
+        this.runnable = runnable
+        this.nextAction = nextAction
+        this.data = data
+        this.response = response
+    }
 
+    exec(req){
+        if(this.data) { 
+            var actionResponse = this.runnable(this.data, req, this.response)
+            if(typeof actionResponse == "string" || Array.isArray(actionResponse)){ 
+                this.response.body = actionResponse
+                return this.response
+            }else{ // If no String must be response object
+                return actionResponse
+            }
+        }
+        var middlewareResponse=this.runnable(req, this)
+        if(typeof middlewareResponse != "object"){
+            throw new Error("Middleware is no responding with an Response (Object)")
+        }
+        return middlewareResponse
+    }
+
+    next(req) {
+        return this.nextAction.exec(req)
+    }
     
 }
 
