@@ -1,5 +1,6 @@
 # except the extensions...
 !appsscript.json
+!index.js
 !**/*.js
 
 # ignore even valid files if in...

@@ -8,6 +8,25 @@ describe('Router', () => {
     });
 
     describe('Basic', () => {
+
+        test('can add GET action', () => 
+        {
+            Router.get("/", () =>  "Hello World!");
+            
+            var response = Router.handle({ method: "get", path: "/" });
+            expect(response.status).toBe(200);
+            expect(response.body).toBe("Hello World!");
+        });
+
+        test('can add POST action', () => 
+        {
+            Router.post("/", () =>  "Hello World!");
+            
+            var response = Router.handle({ method: "post", path: "/" });
+            expect(response.status).toBe(200);
+            expect(response.body).toBe("Hello World!");
+        });
+
         test('put string returned in body & ok status is 200', () => 
         {
             Router.get("/", () =>  "Hello World!");

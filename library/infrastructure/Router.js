@@ -17,6 +17,15 @@ var Router = class Router {
         })
     }
 
+    static post(path, handler, ...middlewares) {
+        Router.getInstance().addRoute({
+            method: 'post',
+            path: path,
+            handler: handler,
+            middlewares: middlewares
+        })
+    }
+
     static handle(request) {
         var route = Router.getInstance().routes
             .filter((route) => request.method==route.method && route.regex.test(request.path))
@@ -104,7 +113,7 @@ class PipelineAction {
             if(typeof actionResponse == "string" || Array.isArray(actionResponse)){ 
                 this.response.body = actionResponse
                 return this.response
-            }else{ // If no String must be response object
+            }else{ // If no String or Array must be response object
                 return actionResponse
             }
         }
