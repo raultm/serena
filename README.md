@@ -6,7 +6,7 @@ Vanilla JS Router with 0 dependencies targeting Google App Scripts. Using ideas 
 
 ## Basic Example (Code and Web)
 
-Using basic bootstrap template as layout
+Using basic bootstrap template as layout. The code below or you have the file [here](https://github.com/raultm/serena/blob/master/resources/basic_example.gs)
 
 ```js
 /*
@@ -64,13 +64,13 @@ function home(data, request, response) {
   return `
   <div class="row">
     <div class="col">
-      <a href="https://script.google.com/a/educarex.es/macros/s/AKfycbyuGyMccH9P-hvPQwvFHs61HOEigOvRHOBwp0R9mUE/dev/numbers">Numbers</a>
+      <a href="${ ScriptApp.getService().getUrl() }/numbers">Numbers</a>
     </div>
     <div class="col">
-      <a href="https://script.google.com/a/educarex.es/macros/s/AKfycbxt54YEUc5PBWhVbCk8hgqet9uZL4ma57GxJz4g-_IjyuEBTr4/exec/hi/Raul/Tierno">Say Hi!</a>
+      <a href="${ ScriptApp.getService().getUrl() }/hi/Raul/Tierno">Say Hi!</a>
     </div>
     <div class="col">
-      <a href="https://script.google.com/a/educarex.es/macros/s/AKfycbxt54YEUc5PBWhVbCk8hgqet9uZL4ma57GxJz4g-_IjyuEBTr4/exec/dont/exists">URL not exists</a>
+      <a href="${ ScriptApp.getService().getUrl() }/dont/exists">URL not exists</a>
     </div>
   </div>
 `
@@ -92,7 +92,7 @@ function getLayout() {
   </head>
   <body>
     <div class="container">
-      <a href="https://script.google.com/a/educarex.es/macros/s/AKfycbxt54YEUc5PBWhVbCk8hgqet9uZL4ma57GxJz4g-_IjyuEBTr4/exec">
+      <a href="${ ScriptApp.getService().getUrl() }">
         <h1 class='mt-5'>Serena Router Example</h1>
       </a>
     </div>
@@ -107,6 +107,8 @@ function getLayout() {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>
+`
+}
 `
 }
 ```
