@@ -8,7 +8,9 @@ Vanilla JS Router with 0 dependencies targeting Google App Scripts. Using ideas 
 
 ## Installation 
 
-Project Library Id: 1T2vzgCURm0jQABfV6zve_MKzZRNRRkAcM4KurzJ1aZNvg_XxwKHsic_d
+Project Library Id 
+
+`1T2vzgCURm0jQABfV6zve_MKzZRNRRkAcM4KurzJ1aZNvg_XxwKHsic_d`
 
 Resources > Libraries... 
 
